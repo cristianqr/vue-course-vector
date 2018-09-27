@@ -1,17 +1,22 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <UserList></UserList>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BindEvent from './components/BindEvent.vue';
+import ComputedProperty from './components/computed-property';
+import LifeCycle from './components/Lifecycle';
+import FirstForm from './components/FirstForm';
+import UserList from './components/UserList';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+      BindEvent,
+      ComputedProperty,
+      UserList
   }
 }
 </script>
