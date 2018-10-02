@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <UserList></UserList>
+    <DynamicStyle></DynamicStyle>
   </div>
 </template>
 
@@ -10,13 +10,19 @@ import ComputedProperty from './components/computed-property';
 import LifeCycle from './components/Lifecycle';
 import FirstForm from './components/FirstForm';
 import UserList from './components/UserList';
+import RawHtml from './components/RawHtml';
+import DynamicClass from './components/DynamicClass';
+import DynamicStyle from './components/DynamicStyle';
 
 export default {
   name: 'app',
   components: {
       BindEvent,
       ComputedProperty,
-      UserList
+      UserList,
+      RawHtml,
+      DynamicClass,
+      DynamicStyle
   }
 }
 </script>
