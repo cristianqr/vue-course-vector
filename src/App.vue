@@ -1,16 +1,44 @@
 <template>
     <div class="container">
-        <UserNew></UserNew>
+        <template v-for="(item, index) in breadcrumbs">
+            <span>{{item}}</span>
+            <span class="arrow" v-if="(index + 1) < breadcrumbs.length">&raquo;</span>
+        </template>
+        <br><br>
+        <button @click="newUser">Usuario nuevo</button>
+        <UserNew v-if="toggleUser" ref="userNew"></UserNew>
     </div>
 </template>
 
 <script>
     import UserNew from './components/UserNew';
+    import {sharedBus} from './core/sharedBus.js';
 
     export default {
+        data(){
+          return {
+              toggleUser: false,
+              breadcrumbs: []
+          };
+        },
         name: 'app',
         components: {
             UserNew
+        },
+        created() {
+            sharedBus.$on('breadcrumbs:change', (data) => {
+                this.breadcrumbs = data;
+            });
+        },
+        methods: {
+            newUser(){
+                this.toggleUser = !this.toggleUser;
+
+                setTimeout(() => {
+                    this.$refs.userNew.$refs.firstName.focus();
+                }, 1000);
+
+            }
         }
     }
 </script>
@@ -23,5 +51,10 @@
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+    }
+    .arrow{
+        color: #f00;
+        font-size: 16px;
+        padding: 10px;
     }
 </style>

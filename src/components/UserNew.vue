@@ -2,7 +2,7 @@
     <form @submit.prevent="saveUser">
         <div class="form-group">
             <label>Nombres</label>
-            <input type="text" class="form-control" v-model="user.firstName">
+            <input type="text" class="form-control" v-model="user.firstName" id="firstName" ref="firstName" autofocus>
         </div>
 
         <h2>Genero</h2>
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+    import {sharedBus} from '../core/sharedBus.js';
+
     export default {
         data(){
             return {
@@ -69,6 +71,9 @@
                     'COLOMBIA'
                 ]
             }
+        },
+        mounted(){
+            sharedBus.$emit('breadcrumbs:change', ['Usuarios', 'Nuevo']);
         },
         methods: {
             saveUser(){
