@@ -2,7 +2,7 @@
     <form @submit.prevent="saveUser">
         <div class="form-group">
             <label>Nombres</label>
-            <input type="text" class="form-control" v-model="user.firstName" id="firstName" ref="firstName" autofocus>
+            <input type="text" class="form-control" v-model="user.firstName" id="firstName" ref="firstName" app-focus>
         </div>
 
         <h2>Genero</h2>

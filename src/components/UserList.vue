@@ -4,6 +4,16 @@
         <button @click="newUser" class="btn btn-primary">Nuevo</button>
         <br><br>
 
+        <app-card>
+            <template slot="header">Busqueda de Usuario</template>
+            <div class="form-group">
+                <label>Nombres</label>
+                <input type="text" class="form-control" v-app-set-focus="'Hola'">
+            </div>
+        </app-card>
+
+        <br>
+
         <table border="1" width="100%">
             <thead>
                 <th>Nro.</th>
@@ -22,14 +32,6 @@
                         <td>{{user.lastSurname}}</td>
                         <td>{{user.age}}</td>
                         <td><button class="btn btn-primary btn-sm">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            <UserNew :user="user"
-                                     @register="registerUser">
-
-                            </UserNew>
-                        </td>
                     </tr>
                 </template>
             </tbody>
@@ -52,6 +54,9 @@
     import UserNew from './UserNew';
 
     export default {
+        components: {
+            UserNew
+        },
         data() {
             return {
                 userList: [
@@ -88,9 +93,6 @@
                 },
                 toggleUserNew: false
             };
-        },
-        components: {
-            UserNew
         },
         created() {
             fetch('dfjkdjfdjkf').then(res => res.json()).then(res => {

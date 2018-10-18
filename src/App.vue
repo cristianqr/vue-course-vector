@@ -6,12 +6,13 @@
         </template>
         <br><br>
         <button @click="newUser">Usuario nuevo</button>
-        <UserNew v-if="toggleUser" ref="userNew"></UserNew>
+        <UserList></UserList>
     </div>
 </template>
 
 <script>
     import UserNew from './components/UserNew';
+    import UserList from './components/UserList';
     import {sharedBus} from './core/sharedBus.js';
 
     export default {
@@ -23,7 +24,8 @@
         },
         name: 'app',
         components: {
-            UserNew
+            UserNew,
+            UserList
         },
         created() {
             sharedBus.$on('breadcrumbs:change', (data) => {
