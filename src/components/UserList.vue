@@ -14,26 +14,31 @@
 
         <br>
 
-        <table border="1" width="100%">
+        <table class="table table-hover">
             <thead>
+            <tr>
                 <th>Nro.</th>
-                <th>Nombres</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Age</th>
-                <th width="0%">Accion</th>
+                <th>Apellidos y Nombres</th>
+                <th>Email</th>
+                <th>Genero</th>
+                <th>País</th>
+                <th>Interes</th>
+                <th>Acciones</th>
+            </tr>
             </thead>
             <tbody>
-                <template v-for="(user, index) in userList">
-                    <tr>
-                        <td>{{index}}</td>
-                        <td>{{user.firstName}}</td>
-                        <td>{{user.firstSurname}}</td>
-                        <td>{{user.lastSurname}}</td>
-                        <td>{{user.age}}</td>
-                        <td><button class="btn btn-primary btn-sm">Editar</button></td>
-                    </tr>
-                </template>
+            <tr v-for="(user, index) in userList" :key="index">
+                <th>{{index + 1}}</th>
+                <th>{{user | appFullName('-') | appMaxLength('***', 10)}}</th>
+                <th>{{user.email}}</th>
+                <th>{{user.gender}}</th>
+                <th>{{user.country}}</th>
+                <th>{{user.courses | appJoinCourses("-")}}</th>
+                <th>
+                    <button class="btn btn-success btn-sm" @click="$emit('editUser', user)">Editar</button>&nbsp;
+                    <button class="btn btn-danger btn-sm" @click="$emit('removeUser', user)">Eliminar</button>
+                </th>
+            </tr>
             </tbody>
         </table>
         <br><br>
@@ -61,28 +66,54 @@
             return {
                 userList: [
                     {
+                        id: 1,
                         firstName: 'Cristian',
                         firstSurname: 'Quispe',
                         lastSurname: 'Ramirez',
-                        age: 30
+                        email: 'cristianqr@outlook.com',
+                        gender: 'M',
+                        country: 'Peru',
+                        courses: ['Angular', 'Vue', 'React']
                     },
                     {
-                        firstName: 'Melina',
-                        firstSurname: 'Pernia',
-                        lastSurname: 'Pernia',
-                        age: 30
+                        id: 2,
+                        firstName: 'Carmen',
+                        firstSurname: 'Fernandez',
+                        lastSurname: 'Chavez',
+                        email: 'cfernadez@gmail.com',
+                        gender: 'F',
+                        country: 'Brazil',
+                        courses: []
                     },
                     {
-                        firstName: 'Laura',
-                        firstSurname: 'Ramos',
-                        lastSurname: 'Ramirez',
-                        age: 30
+                        id: 3,
+                        firstName: 'Cesia',
+                        firstSurname: 'Benites',
+                        lastSurname: 'Rosales',
+                        email: 'cbenites@outlook.com',
+                        gender: 'F',
+                        country: 'Colombia',
+                        courses: ['Angular']
                     },
                     {
-                        firstName: 'Katherine',
-                        firstSurname: 'Perales',
-                        lastSurname: 'Iglesias',
-                        age: 30
+                        id: 4,
+                        firstName: 'Rigo',
+                        firstSurname: 'Paredes',
+                        lastSurname: 'Arcos',
+                        email: 'rparedes@gmail.com',
+                        gender: 'M',
+                        country: 'Ecuador',
+                        courses: ['Vue', 'React']
+                    },
+                    {
+                        id: 5,
+                        firstName: 'Marco',
+                        firstSurname: 'Montenegro',
+                        lastSurname: 'Ruiz',
+                        email: 'rmontenegro@outlook.com',
+                        gender: 'M',
+                        country: 'Peru',
+                        courses: ['React']
                     }
                 ],
                 user2: {
@@ -95,9 +126,7 @@
             };
         },
         created() {
-            fetch('dfjkdjfdjkf').then(res => res.json()).then(res => {
-                this.user = res;
-            });
+
         },
         methods: {
             registerUser() {

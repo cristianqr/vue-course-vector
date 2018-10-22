@@ -6,7 +6,7 @@
         </template>
         <br><br>
         <button @click="newUser">Usuario nuevo</button>
-        <UserList></UserList>
+        <UserNew></UserNew>
     </div>
 </template>
 
