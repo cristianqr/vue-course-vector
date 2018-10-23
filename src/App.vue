@@ -6,12 +6,13 @@
         </template>
         <br><br>
         <button @click="newUser">Usuario nuevo</button>
-        <UserNew></UserNew>
+        <UserEdit></UserEdit>
     </div>
 </template>
 
 <script>
     import UserNew from './components/UserNew';
+    import UserEdit from './components/UserEdit';
     import UserList from './components/UserList';
     import {sharedBus} from './core/sharedBus.js';
 
@@ -25,6 +26,7 @@
         name: 'app',
         components: {
             UserNew,
+            UserEdit,
             UserList
         },
         created() {

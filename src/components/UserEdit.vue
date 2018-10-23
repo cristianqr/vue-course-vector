@@ -1,16 +1,16 @@
 <template>
-    <form @submit.prevent="saveUser" novalidate>
+    <form @submit.prevent="updateUser" novalidate>
             <div class="form-group">
                 <label>Nombres</label>
-                <input type="text" class="form-control" :class="{'is-invalid': errors.firstName, 'is-valid': !errors.firstName}" v-model="user.firstName" ref="firstName">
+                <input type="text" class="form-control" v-model="user.firstName" ref="firstName" v-validate="'required|min:5|max:10'" name="firstName">
                 <div class="invalid-feedback">
-                    El campo nombre es requerido
+                    {{errors.first('firstName')}}
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Apellido Paterno</label>
-                <input type="text" class="form-control" :class="{'is-invalid': errors.firstSurname, 'is-valid': !errors.firstSurname}" v-model="user.firstSurname">
+                <input type="text" class="form-control" v-model="user.firstSurname" name="firstSurname" v-validate="{required: true, min: 5}">
             </div>
 
             <div class="form-group">
@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control" v-model="user.email" :class="{'is-invalid': errors.email, 'is-valid': !errors.email}">
+                <input type="email" class="form-control" v-model="user.email" name="email" v-validate="{required: true, email: true}">
             </div>
 
             <h4>Genero</h4>
@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>
 </template>
 
@@ -81,16 +81,7 @@
     export default {
         data(){
             return {
-                user: {
-                    id: 1,
-                    firstName: 'Cristian',
-                    firstSurname: 'Quispe',
-                    lastSurname: 'Ramirez',
-                    email: 'cristianqr@outlook.com',
-                    gender: 'M',
-                    country: 'Peru',
-                    courses: ['Angular', 'Vue', 'React']
-                },
+                user: {},
                 countryList: [
                     'PERU',
                     'ARGENTINA',
@@ -101,52 +92,14 @@
         mounted(){
             sharedBus.$emit('breadcrumbs:change', ['Usuarios', 'Nuevo']);
         },
-        computed: {
-            errors(){
-                const errors = {};
-
-                if (!this.user.firstName) {
-                    errors.firstName = true;
-                }
-
-                if (!this.user.firstSurname) {
-                    errors.firstSurname = true;
-                }
-
-                if (!this.user.lastSurname) {
-                    errors.lastSurname = true;
-                }
-
-                if (!this.user.email) {
-                    errors.email = true;
-                }else if(!this.isValidEmail(this.user.email)){
-                    errors.email = true;
-                }
-
-                if (!this.user.gender) {
-                    errors.gender = true;
-                }
-
-                if (!this.user.country) {
-                    errors.country = true;
-                }
-
-                return errors;
-            }
-        },
         methods: {
-            saveUser() {
-                const errorCounts = Object.keys(this.errors).length;
-
-                if (errorCounts >= 1) {
-                    return;
-                }
-
-                alert('Exito!!');
-            },
-            isValidEmail(email) {
-                const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return regEx.test(email);
+            updateUser() {
+                this.$validator.validateAll().then(result => {
+                    if(!result) {
+                        return;
+                    }
+                    alert('Update!!');
+                });
             }
         }
     }
