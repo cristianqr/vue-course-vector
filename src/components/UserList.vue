@@ -2,15 +2,6 @@
     <div>
         <h1>Listado de Usuarios</h1>
         <button @click="newUser" class="btn btn-primary">Nuevo</button>
-        <br><br>
-
-        <app-card>
-            <template slot="header">Busqueda de Usuario</template>
-            <div class="form-group">
-                <label>Nombres</label>
-                <input type="text" class="form-control" v-app-set-focus="'Hola'">
-            </div>
-        </app-card>
 
         <br>
 
@@ -57,6 +48,7 @@
 
 <script>
     import UserNew from './UserNew';
+    import Axios from 'axios';
 
     export default {
         components: {
@@ -64,7 +56,8 @@
         },
         data() {
             return {
-                userList: [
+                userList: [],
+                userListStatic: [
                     {
                         id: 1,
                         firstName: 'Cristian',
@@ -126,7 +119,9 @@
             };
         },
         created() {
-
+            Axios.get('http://localhost:3000/users').then(users => {
+                this.userList = users.data;
+            });
         },
         methods: {
             registerUser() {

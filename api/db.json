@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Cristian",
+      "firstSurname": "Quispe",
+      "lastSurname": "Ramirez",
+      "email": "cristianqr@outlook.com",
+      "gender": "M",
+      "country": "Peru",
+      "courses": [
+        "Angular",
+        "Vue",
+        "React"
+      ]
+    },
+    {
+      "firstName": "Carmen",
+      "firstSurname": "Fernandez",
+      "lastSurname": "Chavez",
+      "email": "cfernadez@gmail.com",
+      "gender": "F",
+      "country": "ARGENTINA",
+      "courses": [
+        "React"
+      ],
+      "id": 2
+    }
+  ]
+}

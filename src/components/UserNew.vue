@@ -2,7 +2,7 @@
     <form @submit.prevent="saveUser" novalidate>
             <div class="form-group">
                 <label>Nombres</label>
-                <input type="text" class="form-control" :class="{'is-invalid': errors.firstName, 'is-valid': !errors.firstName}" v-model="user.firstName" ref="firstName">
+                <input type="text" class="form-control" :class="{'is-invalid': errores.firstName, 'is-valid': !errores.firstName}" v-model="user.firstName" ref="firstName">
                 <div class="invalid-feedback">
                     El campo nombre es requerido
                 </div>
@@ -10,17 +10,17 @@
 
             <div class="form-group">
                 <label>Apellido Paterno</label>
-                <input type="text" class="form-control" :class="{'is-invalid': errors.firstSurname, 'is-valid': !errors.firstSurname}" v-model="user.firstSurname">
+                <input type="text" class="form-control" :class="{'is-invalid': errores.firstSurname, 'is-valid': !errores.firstSurname}" v-model="user.firstSurname">
             </div>
 
             <div class="form-group">
                 <label>Apellido Materno</label>
-                <input type="text" class="form-control" v-model="user.lastSurname">
+                <input type="text" class="form-control" :class="{'is-invalid': errores.lastSurname, 'is-valid': !errores.lastSurname}" v-model="user.lastSurname">
             </div>
 
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control" v-model="user.email" :class="{'is-invalid': errors.email, 'is-valid': !errors.email}">
+                <input type="email" class="form-control" v-model="user.email" :class="{'is-invalid': errores.email, 'is-valid': !errores.email}">
             </div>
 
             <h4>Genero</h4>
@@ -82,14 +82,13 @@
         data(){
             return {
                 user: {
-                    id: 1,
-                    firstName: 'Cristian',
-                    firstSurname: 'Quispe',
-                    lastSurname: 'Ramirez',
-                    email: 'cristianqr@outlook.com',
-                    gender: 'M',
-                    country: 'Peru',
-                    courses: ['Angular', 'Vue', 'React']
+                    firstName: 'Carmen',
+                    firstSurname: 'Fernandez',
+                    lastSurname: 'Chavez',
+                    email: 'cfernadez@gmail.com',
+                    gender: 'F',
+                    country: 'Brazil',
+                    courses: []
                 },
                 countryList: [
                     'PERU',
@@ -102,47 +101,47 @@
             sharedBus.$emit('breadcrumbs:change', ['Usuarios', 'Nuevo']);
         },
         computed: {
-            errors(){
-                const errors = {};
+            errores(){
+                const errores = {};
 
                 if (!this.user.firstName) {
-                    errors.firstName = true;
+                    errores.firstName = true;
                 }
 
                 if (!this.user.firstSurname) {
-                    errors.firstSurname = true;
+                    errores.firstSurname = true;
                 }
 
                 if (!this.user.lastSurname) {
-                    errors.lastSurname = true;
+                    errores.lastSurname = true;
                 }
 
                 if (!this.user.email) {
-                    errors.email = true;
+                    errores.email = true;
                 }else if(!this.isValidEmail(this.user.email)){
-                    errors.email = true;
+                    errores.email = true;
                 }
 
                 if (!this.user.gender) {
-                    errors.gender = true;
+                    errores.gender = true;
                 }
 
                 if (!this.user.country) {
-                    errors.country = true;
+                    errores.country = true;
                 }
 
-                return errors;
+                return errores;
             }
         },
         methods: {
             saveUser() {
-                const errorCounts = Object.keys(this.errors).length;
+                const errorCounts = Object.keys(this.errores).length;
 
                 if (errorCounts >= 1) {
                     return;
                 }
 
-                alert('Exito!!');
+                this.$emit('saveUser', this.user);
             },
             isValidEmail(email) {
                 const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
