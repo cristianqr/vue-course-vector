@@ -6,9 +6,13 @@
         </template>
         <br><br>
         <button @click="newUser">Usuario nuevo</button>
-        <UserList></UserList>
-        <UserEdit v-if="isVisibleEditUser"></UserEdit>
+
+        <UserList :userList="userList" @editUser="editUser($event)"></UserList>
+
         <UserNew @saveUser="saveUsers($event)" v-if="isVisibleNewUser"></UserNew>
+        <UserEdit :user="currentUser" @updateUser="updateUser" v-if="isVisibleEditUser">
+
+        </UserEdit>
     </div>
 </template>
 
@@ -25,7 +29,9 @@
               isVisibleNewUser: false,
               isVisibleEditUser: false,
               toggleUser: false,
-              breadcrumbs: []
+              breadcrumbs: [],
+              currentUser: {},
+              userList: []
           };
         },
         name: 'app',
@@ -38,16 +44,35 @@
             sharedBus.$on('breadcrumbs:change', (data) => {
                 this.breadcrumbs = data;
             });
+
+            Axios.get('http://localhost:3000/users').then(users => {
+                this.userList = users.data;
+            });
         },
         methods: {
             newUser(){
                 this.isVisibleNewUser = true;
             },
+            editUser(editUser){
+                this.isVisibleEditUser = true;
+                this.currentUser = {...editUser};
+            },
             saveUsers(newUser){
-                console.log(newUser);
-                return;
                 Axios.post('http://localhost:3000/users', newUser).then(result => {
                     console.log(result.data);
+                });
+            },
+            updateUser(){
+                Axios.put(`http://localhost:3000/users/${this.currentUser.id}`, this.currentUser).then(result => {
+                    this.userList = this.userList.map(item => {
+                        if(item.id === this.currentUser.id) {
+                            return this.currentUser;
+                        }else {
+                            return item;
+                        }
+                    });
+
+                    this.isVisibleEditUser = false;
                 });
             }
         }

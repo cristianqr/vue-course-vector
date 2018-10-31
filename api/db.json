@@ -2,16 +2,14 @@
   "users": [
     {
       "id": 1,
-      "firstName": "Cristian",
-      "firstSurname": "Quispe",
-      "lastSurname": "Ramirez",
+      "firstName": "Cristiabbb",
+      "firstSurname": "Quispe5",
+      "lastSurname": "Ramireze",
       "email": "cristianqr@outlook.com",
       "gender": "M",
-      "country": "Peru",
+      "country": "ARGENTINA",
       "courses": [
-        "Angular",
-        "Vue",
-        "React"
+        "Angular"
       ]
     },
     {
@@ -22,7 +20,9 @@
       "gender": "F",
       "country": "ARGENTINA",
       "courses": [
-        "React"
+        "React",
+        "Vue",
+        "Angular"
       ],
       "id": 2
     }

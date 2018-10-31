@@ -1,8 +1,6 @@
 <template>
     <div>
         <h1>Listado de Usuarios</h1>
-        <button @click="newUser" class="btn btn-primary">Nuevo</button>
-
         <br>
 
         <table class="table table-hover">
@@ -20,7 +18,7 @@
             <tbody>
             <tr v-for="(user, index) in userList" :key="index">
                 <th>{{index + 1}}</th>
-                <th>{{user | appFullName('-') | appMaxLength('***', 10)}}</th>
+                <th>{{user | appFullName('-') | appMaxLength('***', 50)}}</th>
                 <th>{{user.email}}</th>
                 <th>{{user.gender}}</th>
                 <th>{{user.country}}</th>
@@ -32,104 +30,26 @@
             </tr>
             </tbody>
         </table>
-        <br><br>
-
-        <UserNew :user="user2"
-                 @register="registerUser" v-if="toggleUserNew">
-
-        </UserNew>
-
-        <div class="alert alert-info" v-else>
-            Hacer click en el boton Nuevo para crear un usuario
-        </div>
 
     </div>
 </template>
 
 <script>
     import UserNew from './UserNew';
-    import Axios from 'axios';
+    import UserEdit from './UserEdit';
 
     export default {
         components: {
-            UserNew
+            UserNew,
+            UserEdit
+        },
+        props: {
+            userList: Array
         },
         data() {
-            return {
-                userList: [],
-                userListStatic: [
-                    {
-                        id: 1,
-                        firstName: 'Cristian',
-                        firstSurname: 'Quispe',
-                        lastSurname: 'Ramirez',
-                        email: 'cristianqr@outlook.com',
-                        gender: 'M',
-                        country: 'Peru',
-                        courses: ['Angular', 'Vue', 'React']
-                    },
-                    {
-                        id: 2,
-                        firstName: 'Carmen',
-                        firstSurname: 'Fernandez',
-                        lastSurname: 'Chavez',
-                        email: 'cfernadez@gmail.com',
-                        gender: 'F',
-                        country: 'Brazil',
-                        courses: []
-                    },
-                    {
-                        id: 3,
-                        firstName: 'Cesia',
-                        firstSurname: 'Benites',
-                        lastSurname: 'Rosales',
-                        email: 'cbenites@outlook.com',
-                        gender: 'F',
-                        country: 'Colombia',
-                        courses: ['Angular']
-                    },
-                    {
-                        id: 4,
-                        firstName: 'Rigo',
-                        firstSurname: 'Paredes',
-                        lastSurname: 'Arcos',
-                        email: 'rparedes@gmail.com',
-                        gender: 'M',
-                        country: 'Ecuador',
-                        courses: ['Vue', 'React']
-                    },
-                    {
-                        id: 5,
-                        firstName: 'Marco',
-                        firstSurname: 'Montenegro',
-                        lastSurname: 'Ruiz',
-                        email: 'rmontenegro@outlook.com',
-                        gender: 'M',
-                        country: 'Peru',
-                        courses: ['React']
-                    }
-                ],
-                user2: {
-                    firstName: 'Cristian',
-                    firstSurname: 'Quispeeeeeeeeeee',
-                    lastSurname: 'Ramirez',
-                    age: 30
-                },
-                toggleUserNew: false
-            };
-        },
-        created() {
-            Axios.get('http://localhost:3000/users').then(users => {
-                this.userList = users.data;
-            });
+            return {};
         },
         methods: {
-            registerUser() {
-                this.toggleUserNew = false;
-            },
-            newUser(){
-                this.toggleUserNew = true;
-            }
         }
     }
 </script>

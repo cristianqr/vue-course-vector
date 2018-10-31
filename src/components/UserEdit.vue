@@ -79,9 +79,11 @@
     import {sharedBus} from '../core/sharedBus.js';
 
     export default {
+        props: {
+            user: Object
+        },
         data(){
             return {
-                user: {},
                 countryList: [
                     'PERU',
                     'ARGENTINA',
@@ -98,7 +100,8 @@
                     if(!result) {
                         return;
                     }
-                    alert('Update!!');
+
+                    this.$emit('updateUser');
                 });
             }
         }
