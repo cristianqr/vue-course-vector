@@ -82,12 +82,6 @@
         data(){
             return {
                 user: {
-                    firstName: 'Carmen',
-                    firstSurname: 'Fernandez',
-                    lastSurname: 'Chavez',
-                    email: 'cfernadez@gmail.com',
-                    gender: 'F',
-                    country: 'Brazil',
                     courses: []
                 },
                 countryList: [

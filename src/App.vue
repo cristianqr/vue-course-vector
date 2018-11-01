@@ -5,13 +5,23 @@
             <span class="arrow" v-if="(index + 1) < breadcrumbs.length">&raquo;</span>
         </template>
         <br><br>
-        <button @click="newUser">Usuario nuevo</button>
+        <button @click="newUser" class="btn btn-primary">Usuario nuevo</button>
 
-        <UserList :userList="userList" @editUser="editUser($event)"></UserList>
+        <UserList
+                :userList="userList"
+                @editUser="editUser($event)"
+                @removeUser="removeUser($event)">
+        </UserList>
 
-        <UserNew @saveUser="saveUsers($event)" v-if="isVisibleNewUser"></UserNew>
-        <UserEdit :user="currentUser" @updateUser="updateUser" v-if="isVisibleEditUser">
+        <UserNew
+                @saveUser="saveUsers($event)"
+                v-if="isVisibleNewUser">
+        </UserNew>
 
+        <UserEdit
+                :user="currentUser"
+                @updateUser="updateUser"
+                v-if="isVisibleEditUser">
         </UserEdit>
     </div>
 </template>
@@ -73,6 +83,11 @@
                     });
 
                     this.isVisibleEditUser = false;
+                });
+            },
+            removeUser(deleteUser){
+                Axios.delete(`http://localhost:3000/users/${deleteUser.id}`).then(result => {
+                    this.userList = this.userList.filter(item => item.id !== deleteUser.id);
                 });
             }
         }

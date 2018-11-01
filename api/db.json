@@ -11,20 +11,6 @@
       "courses": [
         "Angular"
       ]
-    },
-    {
-      "firstName": "Carmen",
-      "firstSurname": "Fernandez",
-      "lastSurname": "Chavez",
-      "email": "cfernadez@gmail.com",
-      "gender": "F",
-      "country": "ARGENTINA",
-      "courses": [
-        "React",
-        "Vue",
-        "Angular"
-      ],
-      "id": 2
     }
   ]
 }
