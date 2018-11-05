@@ -32,7 +32,7 @@
     import UserEdit from './components/UserEdit';
     import UserList from './components/UserList';
     import {sharedBus} from './core/sharedBus.js';
-    import Axios from 'axios';
+    import {httpClient} from './core/http-client';
     import AjaxLoader from './core/ajax-loader';
 
     export default {
@@ -60,12 +60,8 @@
 
         },
         mounted() {
-            sharedBus.$emit('ajax-loader:show');
-            Axios.get('http://localhost:3000/users').then(users => {
+            httpClient.get('/users').then(users => {
                 this.userList = users.data;
-                setTimeout(() => {
-                    sharedBus.$emit('ajax-loader:hide');
-                }, 1000);
             });
         },
         methods: {
@@ -77,12 +73,11 @@
                 this.currentUser = {...editUser};
             },
             saveUsers(newUser){
-                Axios.post('http://localhost:3000/users', newUser).then(result => {
-                    console.log(result.data);
+                httpClient.post('/users', newUser).then(result => {
                 });
             },
             updateUser(){
-                Axios.put(`http://localhost:3000/users/${this.currentUser.id}`, this.currentUser).then(result => {
+                httpClient.put(`/users/${this.currentUser.id}`, this.currentUser).then(result => {
                     this.userList = this.userList.map(item => {
                         if(item.id === this.currentUser.id) {
                             return this.currentUser;
@@ -95,7 +90,7 @@
                 });
             },
             removeUser(deleteUser){
-                Axios.delete(`http://localhost:3000/users/${deleteUser.id}`).then(result => {
+                httpClient.delete(`/users/${deleteUser.id}`).then(result => {
                     this.userList = this.userList.filter(item => item.id !== deleteUser.id);
                 });
             }
