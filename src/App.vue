@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <AjaxLoader></AjaxLoader>
         <template v-for="(item, index) in breadcrumbs">
             <span>{{item}}</span>
             <span class="arrow" v-if="(index + 1) < breadcrumbs.length">&raquo;</span>
@@ -32,6 +33,7 @@
     import UserList from './components/UserList';
     import {sharedBus} from './core/sharedBus.js';
     import Axios from 'axios';
+    import AjaxLoader from './core/ajax-loader';
 
     export default {
         data(){
@@ -48,15 +50,22 @@
         components: {
             UserNew,
             UserEdit,
-            UserList
+            UserList,
+            AjaxLoader
         },
         created() {
             sharedBus.$on('breadcrumbs:change', (data) => {
                 this.breadcrumbs = data;
             });
 
+        },
+        mounted() {
+            sharedBus.$emit('ajax-loader:show');
             Axios.get('http://localhost:3000/users').then(users => {
                 this.userList = users.data;
+                setTimeout(() => {
+                    sharedBus.$emit('ajax-loader:hide');
+                }, 1000);
             });
         },
         methods: {
