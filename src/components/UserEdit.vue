@@ -76,14 +76,12 @@
 </template>
 
 <script>
-    import {sharedBus} from '../core/sharedBus.js';
+    import {httpClient} from "../core/http-client";
 
     export default {
-        props: {
-            user: Object
-        },
         data(){
             return {
+                user: {},
                 countryList: [
                     'PERU',
                     'ARGENTINA',
@@ -92,7 +90,10 @@
             }
         },
         mounted(){
-            sharedBus.$emit('breadcrumbs:change', ['Usuarios', 'Nuevo']);
+            const userId = this.$route.params.userId;
+            httpClient.get('/users/' + userId).then(users => {
+                this.user = users.data;
+            });
         },
         methods: {
             updateUser() {

@@ -2,8 +2,8 @@
     <div>
         <h1>Listado de Usuarios</h1>
         <br>
-
-        <table class="table table-hover">
+         <button @click="newUser" class="btn btn-primary">Nuevo</button>
+        <table class="table table-hove mt-2">
             <thead>
             <tr>
                 <th>Nro.</th>
@@ -24,7 +24,7 @@
                 <th>{{user.country}}</th>
                 <th>{{user.courses | appJoinCourses("-")}}</th>
                 <th>
-                    <button class="btn btn-success btn-sm" @click="$emit('editUser', user)">Editar</button>&nbsp;
+                    <router-link :to="'/users/edit/' + user.id" class="btn btn-success">Editar</router-link>&nbsp;
                     <button class="btn btn-danger btn-sm" @click="$emit('removeUser', user)">Eliminar</button>
                 </th>
             </tr>
@@ -37,19 +37,27 @@
 <script>
     import UserNew from './UserNew';
     import UserEdit from './UserEdit';
+    import {httpClient} from "../core/http-client";
 
     export default {
         components: {
             UserNew,
             UserEdit
         },
-        props: {
-            userList: Array
+        mounted() {
+            httpClient.get('/users').then(users => {
+                this.userList = users.data;
+            });
         },
         data() {
-            return {};
+            return {
+                userList: []
+            };
         },
         methods: {
+            newUser() {
+                this.$router.push('/users/new');
+            }
         }
     }
 </script>

@@ -1,99 +1,18 @@
 <template>
     <div class="container">
         <AjaxLoader></AjaxLoader>
-        <template v-for="(item, index) in breadcrumbs">
-            <span>{{item}}</span>
-            <span class="arrow" v-if="(index + 1) < breadcrumbs.length">&raquo;</span>
-        </template>
-        <br><br>
-        <button @click="newUser" class="btn btn-primary">Usuario nuevo</button>
-
-        <UserList
-                :userList="userList"
-                @editUser="editUser($event)"
-                @removeUser="removeUser($event)">
-        </UserList>
-
-        <UserNew
-                @saveUser="saveUsers($event)"
-                v-if="isVisibleNewUser">
-        </UserNew>
-
-        <UserEdit
-                :user="currentUser"
-                @updateUser="updateUser"
-                v-if="isVisibleEditUser">
-        </UserEdit>
+        <router-link to="/">Home</router-link> |
+        <router-link to="/users">Usuarios</router-link>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-    import UserNew from './components/UserNew';
-    import UserEdit from './components/UserEdit';
-    import UserList from './components/UserList';
-    import {sharedBus} from './core/sharedBus.js';
-    import {httpClient} from './core/http-client';
     import AjaxLoader from './core/ajax-loader';
 
     export default {
-        data(){
-          return {
-              isVisibleNewUser: false,
-              isVisibleEditUser: false,
-              toggleUser: false,
-              breadcrumbs: [],
-              currentUser: {},
-              userList: []
-          };
-        },
-        name: 'app',
         components: {
-            UserNew,
-            UserEdit,
-            UserList,
             AjaxLoader
-        },
-        created() {
-            sharedBus.$on('breadcrumbs:change', (data) => {
-                this.breadcrumbs = data;
-            });
-
-        },
-        mounted() {
-            httpClient.get('/users').then(users => {
-                this.userList = users.data;
-            });
-        },
-        methods: {
-            newUser(){
-                this.isVisibleNewUser = true;
-            },
-            editUser(editUser){
-                this.isVisibleEditUser = true;
-                this.currentUser = {...editUser};
-            },
-            saveUsers(newUser){
-                httpClient.post('/users', newUser).then(result => {
-                });
-            },
-            updateUser(){
-                httpClient.put(`/users/${this.currentUser.id}`, this.currentUser).then(result => {
-                    this.userList = this.userList.map(item => {
-                        if(item.id === this.currentUser.id) {
-                            return this.currentUser;
-                        }else {
-                            return item;
-                        }
-                    });
-
-                    this.isVisibleEditUser = false;
-                });
-            },
-            removeUser(deleteUser){
-                httpClient.delete(`/users/${deleteUser.id}`).then(result => {
-                    this.userList = this.userList.filter(item => item.id !== deleteUser.id);
-                });
-            }
         }
     }
 </script>
