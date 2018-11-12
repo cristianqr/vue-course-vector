@@ -76,7 +76,7 @@
 </template>
 
 <script>
-    import {sharedBus} from '../core/sharedBus.js';
+    import {sharedBus} from '../../core/sharedBus.js';
 
     export default {
         data(){

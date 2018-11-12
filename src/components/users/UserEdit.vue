@@ -76,7 +76,7 @@
 </template>
 
 <script>
-    import {httpClient} from "../core/http-client";
+    import {httpClient} from "../../core/http-client";
 
     export default {
         data(){

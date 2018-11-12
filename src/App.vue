@@ -1,8 +1,6 @@
 <template>
     <div class="container">
         <AjaxLoader></AjaxLoader>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/users">Usuarios</router-link>
         <router-view></router-view>
     </div>
 </template>

@@ -37,7 +37,7 @@
 <script>
     import UserNew from './UserNew';
     import UserEdit from './UserEdit';
-    import {httpClient} from "../core/http-client";
+    import {httpClient} from "../../core/http-client";
 
     export default {
         components: {
