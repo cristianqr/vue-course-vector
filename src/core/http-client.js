@@ -16,4 +16,7 @@ httpClient.interceptors.response.use((response) => {
         sharedBus.$emit('ajax-loader:hide');
     }, 1000);
     return response;
+}, (error) => {
+    sharedBus.$emit('ajax-loader:hide');
+    return Promise.reject(error);
 });

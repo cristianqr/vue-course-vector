@@ -10,7 +10,9 @@
       "country": "ARGENTINA",
       "courses": [
         "Angular"
-      ]
+      ],
+      "username": "cquispe",
+      "password": "123"
     },
     {
       "courses": [
@@ -22,7 +24,9 @@
       "email": "aaaaa@jkjfkdjf.com",
       "gender": "M",
       "country": "ARGENTINA",
-      "id": 2
+      "id": 2,
+      "username": "aaaa",
+      "password": "123"
     }
   ]
 }
