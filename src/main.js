@@ -6,6 +6,7 @@ import './shared'
 import './shared/directives'
 import './shared/filters';
 import router from './routes';
+import {store} from "./store/store";
 
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -23,6 +24,7 @@ Vue.use(VeeValidate, veeValidateConfig);
 Validator.localize('es', es);
 
 new Vue({
-    router: router,
+    router,
+    store,
     render: h => h(App)
 }).$mount('#app')

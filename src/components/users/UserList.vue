@@ -2,7 +2,7 @@
     <div>
         <h1>Listado de Usuarios</h1>
         <br>
-         <button @click="newUser" class="btn btn-primary">Nuevo</button>
+        <button @click="newUser" class="btn btn-primary">Nuevo</button>
         <table class="table table-hove mt-2">
             <thead>
             <tr>
@@ -29,6 +29,14 @@
                 </th>
             </tr>
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="7">Total damas: {{totalWoman}}</td>
+            </tr>
+            <tr>
+                <td colspan="7">Total caballeros: {{totalMen}}</td>
+            </tr>
+            </tfoot>
         </table>
 
     </div>
@@ -38,6 +46,8 @@
     import UserNew from './UserNew';
     import UserEdit from './UserEdit';
     import {httpClient} from "../../core/http-client";
+    import {store} from "../../store/store";
+    import {mapGetters} from 'vuex';
 
     export default {
         components: {
@@ -45,15 +55,17 @@
             UserEdit
         },
         mounted() {
-            httpClient.get('/users').then(users => {
+            this.userList=store.state.users;
+            /*httpClient.get('/users').then(users => {
                 this.userList = users.data;
-            });
+            });*/
         },
         data() {
             return {
                 userList: []
             };
         },
+        computed: mapGetters(['totalWoman', 'totalMen']),
         methods: {
             newUser() {
                 this.$router.push('/users/new');

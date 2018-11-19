@@ -10,6 +10,7 @@ import {usersGuard} from "./components/users/users.guard";
 Vue.use(VueRouter);
 
 export default new VueRouter({
+    mode: 'history',
     routes: [
         {
             path: '',
