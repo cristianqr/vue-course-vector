@@ -45,7 +45,6 @@
 <script>
     import UserNew from './UserNew';
     import UserEdit from './UserEdit';
-    import {httpClient} from "../../core/http-client";
     import {store} from "../../store/store";
     import {mapGetters} from 'vuex';
 
@@ -55,17 +54,14 @@
             UserEdit
         },
         mounted() {
-            this.userList=store.state.users;
-            /*httpClient.get('/users').then(users => {
-                this.userList = users.data;
-            });*/
+            store.dispatch('user/loadUsers');
         },
-        data() {
-            return {
-                userList: []
-            };
+        computed: {
+            ...mapGetters('user', ['totalWoman', 'totalMen']),
+            userList() {
+                return store.state.user.users;
+            }
         },
-        computed: mapGetters(['totalWoman', 'totalMen']),
         methods: {
             newUser() {
                 this.$router.push('/users/new');

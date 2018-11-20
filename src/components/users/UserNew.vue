@@ -77,12 +77,23 @@
 
 <script>
     import {sharedBus} from '../../core/sharedBus.js';
+    import {store} from "../../store/store";
 
     export default {
         data(){
             return {
                 user: {
-                    courses: []
+                    "courses": [
+                        "React"
+                    ],
+                    "firstName": "bbbbbb",
+                    "firstSurname": "bbbbb",
+                    "lastSurname": "bbbbbb",
+                    "email": "bbbbb@jkjfkdjf.com",
+                    "gender": "M",
+                    "country": "ARGENTINA",
+                    "username": "aaaa",
+                    "password": "123"
                 },
                 countryList: [
                     'PERU',
@@ -135,7 +146,9 @@
                     return;
                 }
 
-                this.$emit('saveUser', this.user);
+                store.dispatch('user/saveUser', this.user).then(() => {
+                    this.$router.push('/users');
+                })
             },
             isValidEmail(email) {
                 const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
